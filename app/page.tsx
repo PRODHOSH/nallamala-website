@@ -8,8 +8,6 @@ import AboutSection from "@/components/about-section"
 import RegionalCarousel from "@/components/regional-carousel"
 import CommunitiesSection from "@/components/communities-section"
 import UpdatesSection from "@/components/updates-section"
-import EventsSection from "@/components/events-section"
-import BlogsSection from "@/components/blogs-section"
 import Footer from "@/components/footer"
 
 export default function Home() {
@@ -52,12 +50,6 @@ export default function Home() {
       </div>
       <div className="scroll-animate">
         <UpdatesSection />
-      </div>
-      <div className="scroll-animate">
-        <EventsSection />
-      </div>
-      <div className="scroll-animate">
-        <BlogsSection />
       </div>
       <Footer />
     </main>

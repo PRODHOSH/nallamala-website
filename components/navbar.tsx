@@ -1,12 +1,33 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { useRouter } from "next/navigation"
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const router = useRouter()
+
+  useEffect(() => {
+    // Check authentication status
+    const authStatus = localStorage.getItem('isAuthenticated') === 'true'
+    setIsAuthenticated(authStatus)
+  }, [])
+
+  const handleAuthAction = () => {
+    if (isAuthenticated) {
+      // Sign out
+      localStorage.removeItem('isAuthenticated')
+      setIsAuthenticated(false)
+      router.push('/')
+    } else {
+      // Sign in
+      router.push('/signin')
+    }
+  }
 
   const navItems = [
     { label: "Home", href: "/" },
@@ -15,6 +36,8 @@ export default function Navbar() {
     { label: "Blogs", href: "/blogs" },
     { label: "Communities", href: "/communities" },
     { label: "Council & Team", href: "/council" },
+    { label: "PYQS", href: "/pyqs" },
+    { label: "Resources", href: "/resources" },
   ]
 
   return (
@@ -48,11 +71,12 @@ export default function Navbar() {
 
           {/* Right Section */}
           <div className="flex items-center space-x-4">
-            <Link href="/signin">
-              <Button className="hidden sm:flex bg-primary hover:bg-primary/90 text-black font-semibold">
-                Sign In
-              </Button>
-            </Link>
+            <Button 
+              onClick={handleAuthAction}
+              className="hidden sm:flex bg-primary hover:bg-primary/90 text-black font-semibold"
+            >
+              {isAuthenticated ? 'Sign Out' : 'Sign In'}
+            </Button>
 
             {/* Mobile Menu Button */}
             <button onClick={() => setIsOpen(!isOpen)} className="lg:hidden text-white hover:text-primary transition">
@@ -75,9 +99,15 @@ export default function Navbar() {
                   {item.label}
                 </Link>
               ))}
-              <Link href="/signin" onClick={() => setIsOpen(false)} className="block">
-                <Button className="w-full mt-4 bg-primary hover:bg-primary/90 text-black font-semibold">Sign In</Button>
-              </Link>
+              <Button 
+                onClick={() => {
+                  handleAuthAction()
+                  setIsOpen(false)
+                }} 
+                className="w-full mt-4 bg-primary hover:bg-primary/90 text-black font-semibold"
+              >
+                {isAuthenticated ? 'Sign Out' : 'Sign In'}
+              </Button>
             </div>
           </div>
         )}

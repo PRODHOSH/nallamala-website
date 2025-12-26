@@ -75,7 +75,7 @@ export default function CouncilPage() {
         {
           id: 5,
           name: "Arya Mukherjee",
-          role: "Web Administrator",
+          role: "Web Admin",
           message: "Managing and maintaining our digital presence.",
           email: "arya@nallamala.house",
           phone: "+91-XXXXXXXXXX",

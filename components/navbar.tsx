@@ -49,12 +49,13 @@ export default function Navbar() {
 
   const navItemsAfter = [
     { label: "Communities", href: "/communities" },
-    { label: "PYQS", href: "/pyqs" },
+    { label: "Queries", href: "/queries" },
+    { label: "Tools", href: "/tools" },
     { label: "Resources", href: "/resources" },
   ]
 
   const councilYears = [
-    { year: "2025-2026", href: "/council?year=2025-2026", external: false },
+    { year: "Present", href: "/council?year=2025-2026", external: false },
     { year: "2024-2025", href: "/council?year=2024-2025", external: false },
     { year: "2023-2024", href: "https://sites.google.com/student.onlinedegree.iitm.ac.in/nallamala/house-council/2023-24", external: true },
     { year: "2022-2023", href: "https://sites.google.com/student.onlinedegree.iitm.ac.in/nallamala/house-council/2022-23", external: true },
@@ -73,7 +74,6 @@ export default function Navbar() {
                 className="w-full h-full object-cover"
               />
             </div>
-            <span className="hidden sm:inline text-white font-serif font-bold">Nallamala House</span>
           </Link>
 
           {/* Desktop Navigation */}

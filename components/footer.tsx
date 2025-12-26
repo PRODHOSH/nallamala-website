@@ -9,7 +9,7 @@ export default function Footer() {
   return (
     <footer className="bg-black/95 backdrop-blur-lg border-t border-primary/20 py-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
-        <div className="grid md:grid-cols-4 gap-8 mb-12">
+        <div className="grid md:grid-cols-3 gap-8 mb-12">
           {/* Brand */}
           <div className="space-y-4">
             <div className="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center">
@@ -29,29 +29,12 @@ export default function Footer() {
             <h4 className="text-white font-semibold mb-4">Quick Links</h4>
             <ul className="space-y-2">
               {[
-                { label: "Home", href: "#" },
-                { label: "Events", href: "#events" },
-                { label: "Blogs", href: "#blogs" },
-                { label: "Council", href: "#council" },
-              ].map((link) => (
-                <li key={link.label}>
-                  <Link href={link.href} className="text-white/70 hover:text-primary transition text-sm">
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Resources */}
-          <div>
-            <h4 className="text-white font-semibold mb-4">Resources</h4>
-            <ul className="space-y-2">
-              {[
-                { label: "About Us", href: "#" },
-                { label: "Clubs", href: "#clubs" },
-                { label: "Alumni", href: "#" },
-                { label: "Contact", href: "#" },
+                { label: "Home", href: "/" },
+                { label: "Updates", href: "/updates" },
+                { label: "Events", href: "/events" },
+                { label: "Blogs", href: "/blogs" },
+                { label: "Council", href: "/council?year=2025-2026" },
+                { label: "Communities", href: "/communities" },
               ].map((link) => (
                 <li key={link.label}>
                   <Link href={link.href} className="text-white/70 hover:text-primary transition text-sm">
@@ -89,6 +72,39 @@ export default function Footer() {
 
         {/* Divider */}
         <div className="border-t border-white/10 pt-8 mt-8">
+          {/* Developer Credits */}
+          <div className="text-center mb-6">
+            <p className="text-white/60 text-sm">
+              Special thanks to developers of the website{" "}
+              <a 
+                href="https://linkedin.com/in/arya-mukherjee" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-primary hover:text-primary/80 transition"
+              >
+                Arya Mukherjee
+              </a>
+              {" "}
+              <a 
+                href="https://linkedin.com/in/prodhosh-vs" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-primary hover:text-primary/80 transition"
+              >
+                Prodhosh VS
+              </a>
+              {" "}
+              <a 
+                href="https://linkedin.com/in/pavithra-chakravarthy" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-primary hover:text-primary/80 transition"
+              >
+                Pavithra Chakravarthy
+              </a>
+            </p>
+          </div>
+          
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-white/60 text-sm text-center md:text-left">वसुधैव कुटुम्बकम् - The World is One Family</p>
             <p className="text-white/60 text-sm mt-4 md:mt-0">

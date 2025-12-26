@@ -73,25 +73,49 @@ export default function CouncilPage() {
       WEBOPS: [
         {
           id: 5,
-          name: "Vikram Kumar",
-          role: "Web Operations Lead",
-          message: "Digitizing the future of our community.",
-          email: "vikram@nallamala.house",
+          name: "Web Admin",
+          role: "Web Administrator",
+          message: "Managing and maintaining our digital presence.",
+          email: "webadmin@nallamala.house",
           phone: "+91-XXXXXXXXXX",
-          linkedin: "linkedin.com/in/vikram-kumar",
-          image: "/professional-portrait-vikram-tech.jpg",
-          bio: "Vikram leads the technical infrastructure and digital initiatives that keep our community connected.",
+          linkedin: "linkedin.com/in/web-admin",
+          image: "/images/2025-26/web_admin.jpeg",
+          objectPosition: "center 80%",
+          bio: "Responsible for overall website administration, security, and technical infrastructure that keeps our digital platforms running smoothly.",
         },
         {
           id: 6,
-          name: "Sneha Patel",
-          role: "Content Manager",
-          message: "Sharing stories that inspire and connect.",
-          email: "sneha@nallamala.house",
+          name: "Website Manager",
+          role: "Website Manager",
+          message: "Crafting seamless digital experiences.",
+          email: "webmanager@nallamala.house",
           phone: "+91-XXXXXXXXXX",
-          linkedin: "linkedin.com/in/sneha-patel",
-          image: "/professional-portrait-sneha.jpg",
-          bio: "Sneha crafts compelling narratives that bring our community to life across all platforms.",
+          linkedin: "linkedin.com/in/website-manager",
+          image: "/images/2025-26/website_manager.jpg",
+          objectPosition: "center 40%",
+          bio: "Oversees content management, user experience, and ensures our website reflects the vibrant spirit of Nallamala House.",
+        },
+        {
+          id: 7,
+          name: "Video Editor",
+          role: "Video Editor",
+          message: "Bringing moments to life through visuals.",
+          email: "videoeditor@nallamala.house",
+          phone: "+91-XXXXXXXXXX",
+          linkedin: "linkedin.com/in/video-editor",
+          image: "/images/2025-26/video_editor.jpg",
+          bio: "Creates compelling video content that captures our events, stories, and the essence of our community.",
+        },
+        {
+          id: 8,
+          name: "Graphic Designer",
+          role: "Graphic Designer",
+          message: "Designing the visual identity of our house.",
+          email: "designer@nallamala.house",
+          phone: "+91-XXXXXXXXXX",
+          linkedin: "linkedin.com/in/graphic-designer",
+          image: "/images/2025-26/graphic_designer.jpg",
+          bio: "Designs stunning graphics, posters, and visual content that represents our house's creativity and excellence.",
         },
       ],
       REGIONAL: [
@@ -202,10 +226,11 @@ export default function CouncilPage() {
                   onClick={() => setSelectedMember(member)}
                   className="glass-dark p-6 rounded-xl border border-primary/20 hover:border-primary/60 transition-all duration-300 hover:-translate-y-1 text-left cursor-pointer group"
                 >
-                  <div className="mb-4 overflow-hidden rounded-lg h-40 bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
+                  <div className="mb-4 overflow-hidden rounded-lg aspect-square bg-gradient-to-br from-primary/20 to-primary/5">
                     <img
                       src={member.image || "/placeholder.svg"}
                       alt={member.name}
+                      style={{ objectPosition: member.objectPosition || 'center' }}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                   </div>
@@ -228,24 +253,26 @@ export default function CouncilPage() {
 
       {/* Member Modal */}
       {selectedMember && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-          <div className="bg-gradient-to-b from-white/10 to-white/5 border border-primary/30 rounded-2xl w-full max-w-2xl max-h-[80vh] overflow-y-auto glass">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md">
+          <div className="bg-gradient-to-b from-white/10 to-white/5 border border-primary/30 rounded-2xl w-full max-w-5xl max-h-[90vh] overflow-y-auto glass shadow-2xl">
             {/* Header */}
-            <div className="sticky top-0 flex items-center justify-between p-6 border-b border-primary/20 bg-black/50 backdrop-blur">
-              <h2 className="text-2xl font-serif font-bold text-white">{selectedMember.name}</h2>
+            <div className="sticky top-0 flex items-center justify-between p-8 border-b border-primary/20 bg-black/50 backdrop-blur">
+              <h2 className="text-3xl font-serif font-bold text-white">{selectedMember.name}</h2>
               <button onClick={() => setSelectedMember(null)} className="text-white/70 hover:text-white transition">
                 <X size={24} />
               </button>
             </div>
 
             {/* Content */}
-            <div className="p-6 space-y-6">
+            <div className="p-8 space-y-8">
               {/* Image */}
-              <img
-                src={selectedMember.image || "/placeholder.svg"}
-                alt={selectedMember.name}
-                className="w-full h-64 object-cover rounded-lg"
-              />
+              <div className="w-full max-w-md mx-auto">
+                <img
+                  src={selectedMember.image || "/placeholder.svg"}
+                  alt={selectedMember.name}
+                  className="w-full h-[600px] object-cover object-center rounded-lg shadow-2xl"
+                />
+              </div>
 
               {/* Role & Message */}
               <div>

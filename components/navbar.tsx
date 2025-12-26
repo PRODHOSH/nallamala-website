@@ -54,9 +54,10 @@ export default function Navbar() {
   ]
 
   const councilYears = [
-    { year: "2025-2026", href: "/council?year=2025-2026" },
-    { year: "2024-2025", href: "/council?year=2024-2025" },
-    { year: "2023-2024", href: "/council?year=2023-2024" },
+    { year: "2025-2026", href: "/council?year=2025-2026", external: false },
+    { year: "2024-2025", href: "/council?year=2024-2025", external: false },
+    { year: "2023-2024", href: "https://sites.google.com/student.onlinedegree.iitm.ac.in/nallamala/house-council/2023-24", external: true },
+    { year: "2022-2023", href: "https://sites.google.com/student.onlinedegree.iitm.ac.in/nallamala/house-council/2022-23", external: true },
   ]
 
   return (
@@ -100,14 +101,27 @@ export default function Navbar() {
               {councilDropdown && (
                 <div className="absolute top-full mt-2 w-48 glass-dark rounded-lg border border-primary/30 overflow-hidden shadow-xl">
                   {councilYears.map((item) => (
-                    <Link
-                      key={item.year}
-                      href={item.href}
-                      onClick={() => setCouncilDropdown(false)}
-                      className="block px-4 py-3 text-sm text-white/80 hover:text-primary hover:bg-white/5 transition border-b border-white/5 last:border-b-0"
-                    >
-                      {item.year}
-                    </Link>
+                    item.external ? (
+                      <a
+                        key={item.year}
+                        href={item.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={() => setCouncilDropdown(false)}
+                        className="block px-4 py-3 text-sm text-white/80 hover:text-primary hover:bg-white/5 transition border-b border-white/5 last:border-b-0"
+                      >
+                        {item.year}
+                      </a>
+                    ) : (
+                      <Link
+                        key={item.year}
+                        href={item.href}
+                        onClick={() => setCouncilDropdown(false)}
+                        className="block px-4 py-3 text-sm text-white/80 hover:text-primary hover:bg-white/5 transition border-b border-white/5 last:border-b-0"
+                      >
+                        {item.year}
+                      </Link>
+                    )
                   ))}
                 </div>
               )}
@@ -159,14 +173,27 @@ export default function Navbar() {
               <div className="pt-2 border-t border-white/10">
                 <p className="px-3 py-2 text-white/60 text-xs uppercase tracking-wider">Council & Team</p>
                 {councilYears.map((item) => (
-                  <Link
-                    key={item.year}
-                    href={item.href}
-                    className="block px-3 py-2 pl-6 text-white/80 hover:text-primary hover:bg-white/5 rounded-lg transition text-sm"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    {item.year}
-                  </Link>
+                  item.external ? (
+                    <a
+                      key={item.year}
+                      href={item.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block px-3 py-2 pl-6 text-white/80 hover:text-primary hover:bg-white/5 rounded-lg transition text-sm"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      {item.year}
+                    </a>
+                  ) : (
+                    <Link
+                      key={item.year}
+                      href={item.href}
+                      className="block px-3 py-2 pl-6 text-white/80 hover:text-primary hover:bg-white/5 rounded-lg transition text-sm"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      {item.year}
+                    </Link>
+                  )
                 ))}
               </div>
 

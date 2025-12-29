@@ -7,19 +7,61 @@ import { courseData } from "@/lib/gpa/course-data"
 import { calculateScore } from "@/lib/gpa/calculate-score"
 import { assignGrade } from "@/lib/gpa/grade-utils"
 import type { Course } from "@/lib/gpa/types"
-import { Calculator, BookOpen, GraduationCap, ArrowLeft } from "lucide-react"
+import { Calculator, BookOpen, GraduationCap, ArrowLeft, Plus, Trash2 } from "lucide-react"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
+
+interface SemesterCourse {
+  id: string
+  name: string
+  credits: number
+  gradePoints: number
+}
+
+const gradePointsOptions = [
+  { label: "S (10)", value: 10 },
+  { label: "A (9)", value: 9 },
+  { label: "B (8)", value: 8 },
+  { label: "C (7)", value: 7 },
+  { label: "D (6)", value: 6 },
+  { label: "E (5)", value: 5 },
+  { label: "U (0)", value: 0 },
+]
 
 export default function GPACalculator() {
   const router = useRouter()
   const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [activeTab, setActiveTab] = useState<"course" | "semester">("course")
+  
+  // Course Grade Calculator State
   const [selectedDegree, setSelectedDegree] = useState<"data-science" | "electronic-systems" | "">("")
   const [selectedLevel, setSelectedLevel] = useState<"foundation" | "diploma" | "degree" | "">("")
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null)
   const [formValues, setFormValues] = useState<Record<string, number>>({})
   const [calculatedScore, setCalculatedScore] = useState<number | null>(null)
   const [calculatedGrade, setCalculatedGrade] = useState<string | null>(null)
+
+  // Semester GPA Calculator State
+  const [semesterCourses, setSemesterCourses] = useState<SemesterCourse[]>([
+    { id: "1", name: "", credits: 0, gradePoints: 0 },
+  ])
+
+  // Auto-calculate GPA whenever courses change
+  const semesterGPA = (() => {
+    const validCourses = semesterCourses.filter((c) => c.credits > 0 && c.gradePoints > 0)
+    
+    if (validCourses.length === 0) {
+      return null
+    }
+
+    const totalCredits = validCourses.reduce((sum, course) => sum + course.credits, 0)
+    const totalGradePoints = validCourses.reduce(
+      (sum, course) => sum + course.credits * course.gradePoints,
+      0
+    )
+
+    return totalGradePoints / totalCredits
+  })()
 
   useEffect(() => {
     const authStatus = localStorage.getItem('isAuthenticated') === 'true'
@@ -87,6 +129,43 @@ export default function GPACalculator() {
       const grade = assignGrade(score)
       setCalculatedScore(score)
       setCalculatedGrade(grade)
+
+      // Convert grade to grade points and add to semester courses
+      const gradeToPoints: Record<string, number> = {
+        'S': 10, 'A': 9, 'B': 8, 'C': 7, 'D': 6, 'E': 5, 'U': 0, 'F': 0
+      }
+      const gradePoints = gradeToPoints[grade] || 0
+
+      // Default credits to 4 (standard for most courses)
+      const credits = 4
+
+      // Check if course already exists in semester courses
+      const existingCourseIndex = semesterCourses.findIndex(
+        c => c.name.toLowerCase() === selectedCourse.name.toLowerCase()
+      )
+
+      if (existingCourseIndex !== -1) {
+        // Update existing course
+        const updatedCourses = [...semesterCourses]
+        updatedCourses[existingCourseIndex] = {
+          ...updatedCourses[existingCourseIndex],
+          credits: credits,
+          gradePoints: gradePoints
+        }
+        setSemesterCourses(updatedCourses)
+      } else {
+        // Add new course
+        const newCourse: SemesterCourse = {
+          id: Date.now().toString(),
+          name: selectedCourse.name,
+          credits: credits,
+          gradePoints: gradePoints
+        }
+        
+        // Remove empty placeholder course if it exists
+        const filteredCourses = semesterCourses.filter(c => c.name.trim() !== "" || c.credits > 0 || c.gradePoints > 0)
+        setSemesterCourses([...filteredCourses, newCourse])
+      }
     } catch (error) {
       console.error("Error calculating score:", error)
       alert("Error calculating score. Please check your inputs.")
@@ -97,6 +176,35 @@ export default function GPACalculator() {
     setFormValues({})
     setCalculatedScore(null)
     setCalculatedGrade(null)
+  }
+
+  // Semester GPA Calculator Functions
+  const addCourse = () => {
+    const newCourse: SemesterCourse = {
+      id: Date.now().toString(),
+      name: "",
+      credits: 0,
+      gradePoints: 0,
+    }
+    setSemesterCourses([...semesterCourses, newCourse])
+  }
+
+  const removeCourse = (id: string) => {
+    if (semesterCourses.length > 1) {
+      setSemesterCourses(semesterCourses.filter((course) => course.id !== id))
+    }
+  }
+
+  const updateCourse = (id: string, field: keyof SemesterCourse, value: string | number) => {
+    setSemesterCourses(
+      semesterCourses.map((course) =>
+        course.id === id ? { ...course, [field]: value } : course
+      )
+    )
+  }
+
+  const resetSemesterCalculator = () => {
+    setSemesterCourses([{ id: "1", name: "", credits: 0, gradePoints: 0 }])
   }
 
   if (!isAuthenticated) {
@@ -131,8 +239,36 @@ export default function GPACalculator() {
             <h1 className="text-4xl md:text-5xl font-serif font-bold text-white mb-4">
               GPA <span className="text-primary">Calculator</span>
             </h1>
-            <p className="text-white/70 text-lg">Calculate your course scores and grades</p>
+            <p className="text-white/70 text-lg">Calculate your course scores and semester GPA</p>
           </div>
+
+          {/* Tabs */}
+          <div className="glass-dark rounded-xl p-2 border border-primary/30 mb-8 inline-flex gap-2 w-full max-w-md mx-auto">
+            <button
+              onClick={() => setActiveTab("course")}
+              className={`flex-1 py-3 px-6 rounded-lg font-semibold transition-all duration-300 ${
+                activeTab === "course"
+                  ? "bg-primary text-black"
+                  : "text-white/70 hover:text-white"
+              }`}
+            >
+              Course Grade
+            </button>
+            <button
+              onClick={() => setActiveTab("semester")}
+              className={`flex-1 py-3 px-6 rounded-lg font-semibold transition-all duration-300 ${
+                activeTab === "semester"
+                  ? "bg-primary text-black"
+                  : "text-white/70 hover:text-white"
+              }`}
+            >
+              Semester GPA
+            </button>
+          </div>
+
+          {/* Course Grade Calculator */}
+          {activeTab === "course" && (
+            <>
 
           {/* Selection Cards */}
           <div className="glass-dark rounded-xl p-8 border border-primary/30 mb-6">
@@ -312,7 +448,7 @@ export default function GPACalculator() {
                   onClick={handleCalculate}
                   className="flex-1 bg-primary hover:bg-primary/90 text-black font-semibold py-3 px-6 rounded-lg transition-all duration-300"
                 >
-                  Calculate Score
+                  Calculate Score & Add to Semester
                 </button>
                 <button
                   onClick={handleReset}
@@ -334,6 +470,184 @@ export default function GPACalculator() {
                     <div className="text-center">
                       <p className="text-white/70 mb-2">Grade</p>
                       <p className="text-5xl font-bold text-primary">{calculatedGrade}</p>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </>
+          )}
+          </>
+          )}
+
+          {/* Semester GPA Calculator */}
+          {activeTab === "semester" && (
+            <>
+              {/* Formula Card */}
+              <div className="glass-dark rounded-xl p-6 border border-primary/30 mb-8">
+                <div className="flex items-center gap-3 mb-3">
+                  <BookOpen className="w-5 h-5 text-primary" />
+                  <h3 className="text-white font-semibold">GPA Formula</h3>
+                </div>
+                <div className="bg-black/50 rounded-lg p-4 border border-primary/20">
+                  <p className="text-primary font-mono text-sm">
+                    GPA = Σ(Credits × Grade Points) / Σ(Credits)
+                  </p>
+                </div>
+              </div>
+
+              {/* Courses Input */}
+              <div className="glass-dark rounded-xl p-8 border border-primary/30 mb-6">
+                <div className="flex items-center justify-between mb-6">
+                  <h3 className="text-white font-semibold text-xl">Your Courses</h3>
+                  <button
+                    onClick={addCourse}
+                    className="flex items-center gap-2 px-4 py-2 bg-primary/20 hover:bg-primary/30 text-primary rounded-lg transition-colors"
+                  >
+                    <Plus className="w-4 h-4" />
+                    Add Course
+                  </button>
+                </div>
+
+                <div className="space-y-4">
+                  {semesterCourses.map((course, index) => (
+                    <div
+                      key={course.id}
+                      className="bg-black/30 rounded-lg p-4 border border-primary/20"
+                    >
+                      <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-end">
+                        {/* Course Name */}
+                        <div className="md:col-span-5">
+                          <label className="block text-white/70 text-sm mb-2">
+                            Course Name
+                          </label>
+                          <input
+                            type="text"
+                            value={course.name}
+                            onChange={(e) =>
+                              updateCourse(course.id, "name", e.target.value)
+                            }
+                            placeholder="e.g., Mathematics I"
+                            className="w-full p-3 rounded-lg bg-black/50 border border-primary/30 text-white placeholder:text-white/30 focus:outline-none focus:border-primary transition-colors"
+                          />
+                        </div>
+
+                        {/* Credits */}
+                        <div className="md:col-span-3">
+                          <label className="block text-white/70 text-sm mb-2">
+                            Credits
+                          </label>
+                          <input
+                            type="number"
+                            min="0"
+                            max="10"
+                            step="0.5"
+                            value={course.credits || ""}
+                            onChange={(e) =>
+                              updateCourse(
+                                course.id,
+                                "credits",
+                                parseFloat(e.target.value) || 0
+                              )
+                            }
+                            placeholder="0"
+                            className="w-full p-3 rounded-lg bg-black/50 border border-primary/30 text-white placeholder:text-white/30 focus:outline-none focus:border-primary transition-colors"
+                          />
+                        </div>
+
+                        {/* Grade Points */}
+                        <div className="md:col-span-3">
+                          <label className="block text-white/70 text-sm mb-2">
+                            Grade
+                          </label>
+                          <select
+                            value={course.gradePoints}
+                            onChange={(e) =>
+                              updateCourse(
+                                course.id,
+                                "gradePoints",
+                                parseFloat(e.target.value)
+                              )
+                            }
+                            className="w-full p-3 rounded-lg bg-black/50 border border-primary/30 text-white focus:outline-none focus:border-primary transition-colors appearance-none cursor-pointer"
+                            style={{
+                              backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23d4af37'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`,
+                              backgroundRepeat: 'no-repeat',
+                              backgroundPosition: 'right 0.5rem center',
+                              backgroundSize: '1.25rem',
+                            }}
+                          >
+                            <option value={0}>Select Grade</option>
+                            {gradePointsOptions.map((option) => (
+                              <option key={option.value} value={option.value}>
+                                {option.label}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+
+                        {/* Delete Button */}
+                        <div className="md:col-span-1 flex justify-end">
+                          <button
+                            onClick={() => removeCourse(course.id)}
+                            disabled={semesterCourses.length === 1}
+                            className="p-3 rounded-lg bg-red-500/20 hover:bg-red-500/30 text-red-400 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                            title="Remove course"
+                          >
+                            <Trash2 className="w-5 h-5" />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Action Button */}
+              <div className="flex justify-end mb-6">
+                <button
+                  onClick={resetSemesterCalculator}
+                  className="px-6 py-3 rounded-lg border border-primary/30 text-white hover:border-primary transition-all duration-300"
+                >
+                  Reset All
+                </button>
+              </div>
+
+              {/* Results - Always visible when there are valid courses */}
+              {semesterGPA !== null && (
+                <div className="glass-dark rounded-xl p-8 border border-primary/30">
+                  <h3 className="text-white font-semibold text-xl mb-6 text-center">
+                    Your Semester GPA
+                  </h3>
+                  <div className="text-center">
+                    <div className="inline-block">
+                      <p className="text-7xl font-bold text-primary mb-2">
+                        {semesterGPA.toFixed(2)}
+                      </p>
+                      <p className="text-white/60 text-sm">out of 10.00</p>
+                    </div>
+                  </div>
+                  
+                  {/* Summary */}
+                  <div className="mt-8 pt-6 border-t border-primary/20">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      <div className="text-center">
+                        <p className="text-white/70 text-sm mb-1">Total Courses</p>
+                        <p className="text-2xl font-semibold text-white">
+                          {semesterCourses.filter((c) => c.credits > 0 && c.gradePoints > 0).length}
+                        </p>
+                      </div>
+                      <div className="text-center">
+                        <p className="text-white/70 text-sm mb-1">Total Credits</p>
+                        <p className="text-2xl font-semibold text-white">
+                          {semesterCourses.filter((c) => c.credits > 0 && c.gradePoints > 0).reduce((sum, c) => sum + c.credits, 0).toFixed(1)}
+                        </p>
+                      </div>
+                      <div className="text-center">
+                        <p className="text-white/70 text-sm mb-1">Performance</p>
+                        <p className="text-2xl font-semibold text-primary">
+                          {semesterGPA >= 9 ? "Excellent" : semesterGPA >= 8 ? "Very Good" : semesterGPA >= 7 ? "Good" : semesterGPA >= 6 ? "Average" : "Needs Improvement"}
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>

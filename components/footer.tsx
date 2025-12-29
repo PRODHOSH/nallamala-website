@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { Instagram, Linkedin } from "lucide-react"
+import { Instagram, Linkedin, Database, Cpu } from "lucide-react"
 
 export default function Footer() {
   const currentYear = new Date().getFullYear()
@@ -48,7 +48,7 @@ export default function Footer() {
           {/* Social Media */}
           <div>
             <h4 className="text-white font-semibold mb-4">Follow Us</h4>
-            <div className="flex gap-4">
+            <div className="flex gap-4 mb-6">
               {[
                 { icon: Instagram, href: "https://www.instagram.com/nallamala_iitm/" },
                 { icon: Linkedin, href: "https://www.linkedin.com/company/nallamala-house-iit-madras/posts/?feedView=all" },
@@ -76,6 +76,33 @@ export default function Footer() {
                   <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
                 </svg>
               </a>
+            </div>
+            <div>
+              <h4 className="text-white font-semibold mb-3 text-sm">Academic Portals</h4>
+              <ul className="space-y-2">
+                <li>
+                  <a 
+                    href="https://ds.study.iitm.ac.in/" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-white/70 hover:text-primary transition text-sm flex items-center gap-2"
+                  >
+                    <Database size={16} className="text-primary" />
+                    IITM Data Science Portal
+                  </a>
+                </li>
+                <li>
+                  <a 
+                    href="https://es.study.iitm.ac.in/" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-white/70 hover:text-primary transition text-sm flex items-center gap-2"
+                  >
+                    <Cpu size={16} className="text-primary" />
+                    IITM Electronics Portal
+                  </a>
+                </li>
+              </ul>
             </div>
           </div>
         </div>

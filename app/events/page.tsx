@@ -313,14 +313,14 @@ const pastEvents: EventItem[] = [
               key={event.id}
               className="group rounded-xl overflow-hidden bg-white/5 border border-white/10
               hover:border-primary/50 hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/20
-              transition-all duration-300"
+              transition-all duration-300 flex flex-col"
             >
-              <div className="relative h-[420px] bg-black overflow-hidden">
+              <div className="relative h-72 bg-gradient-to-br from-primary/5 to-black overflow-hidden flex-shrink-0">
                 <Image
                   src={event.image}
                   alt={event.title}
                   fill
-                  className="object-contain group-hover:scale-105 transition-transform duration-500"
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 {event.status && (
                   <div className="absolute top-4 right-4">
@@ -331,13 +331,13 @@ const pastEvents: EventItem[] = [
                 )}
               </div>
 
-              <div className="p-4">
-                <h3 className="text-lg font-bold text-white mb-1">
+              <div className="p-5 flex flex-col flex-1">
+                <h3 className="text-xl font-bold text-white mb-2">
                   {event.title}
                 </h3>
 
                 <p
-                  className={`text-white/70 text-sm transition-all ${
+                  className={`text-white/70 text-sm leading-relaxed mb-3 flex-1 transition-all ${
                     expandedId === event.id ? "" : "line-clamp-3"
                   }`}
                 >
@@ -347,17 +347,20 @@ const pastEvents: EventItem[] = [
                 {event.description.length > 160 && (
                   <button
                     onClick={() => toggleExpand(event.id)}
-                    className="mt-2 text-xs font-semibold text-primary hover:underline"
+                    className="text-xs font-semibold text-primary hover:underline self-start mb-3"
                   >
                     {expandedId === event.id ? "Show less" : "Read more"}
                   </button>
                 )}
 
-                <div className="text-white/60 text-sm mt-3 mb-3">
-                  {event.date} • {event.location}
+                <div className="flex items-center gap-2 text-white/60 text-sm mb-4 pt-3 border-t border-white/10">
+                  <Calendar size={16} className="text-primary" />
+                  <span>{event.date}</span>
+                  <span>•</span>
+                  <span>{event.location}</span>
                 </div>
 
-                <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
                   <a
                     href={`https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(
                       event.title
@@ -365,9 +368,10 @@ const pastEvents: EventItem[] = [
                       event.description
                     )}&location=${encodeURIComponent(event.location)}`}
                     target="_blank"
-                    className="text-white/60 hover:text-primary"
+                    className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-white/5 hover:bg-primary/20 border border-white/10 hover:border-primary/50 rounded-lg text-white/70 hover:text-white transition text-sm"
                   >
-                    <Calendar size={18} />
+                    <Calendar size={16} />
+                    Add to Calendar
                   </a>
 
                   <button
@@ -377,9 +381,9 @@ const pastEvents: EventItem[] = [
                         text: event.description,
                       })
                     }
-                    className="text-white/60 hover:text-primary"
+                    className="px-4 py-2 bg-white/5 hover:bg-primary/20 border border-white/10 hover:border-primary/50 rounded-lg text-white/70 hover:text-white transition"
                   >
-                    <Share2 size={18} />
+                    <Share2 size={16} />
                   </button>
                 </div>
               </div>

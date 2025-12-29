@@ -272,9 +272,13 @@ const pastEvents: EventItem[] = [
       <div className="max-w-[1400px] mx-auto px-2 pt-24 pb-20">
         {/* Header */}
         <div className="text-center mb-14">
+          <p className="text-primary text-sm uppercase tracking-widest mb-4">Our Events</p>
           <h1 className="text-5xl font-serif font-bold text-white mb-4">
             House <span className="text-primary">Events</span>
           </h1>
+          <p className="text-white/70 text-lg mb-8 max-w-2xl mx-auto">
+            Discover events and activities that bring our community together
+          </p>
 
           <input
             type="text"

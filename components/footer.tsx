@@ -125,7 +125,7 @@ export default function Footer() {
               </a>
               <span className="text-white/40">•</span>
               <a 
-                href="https://www.linkedin.com/in/prodhoshvs/" 
+                href="https://prodhosh-links.vercel.app/" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="text-primary hover:text-primary/80 transition"

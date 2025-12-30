@@ -261,7 +261,7 @@ const pastEvents: EventItem[] = [
   )
 
   return (
-    <main className="min-h-screen bg-black">
+    <main className="min-h-screen">
       <Navbar />
 
       {/* Background glow */}

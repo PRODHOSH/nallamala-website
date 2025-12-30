@@ -20,7 +20,7 @@ export default function Queries() {
   const isAuthenticated = typeof window !== 'undefined' && localStorage.getItem('isAuthenticated') === 'true'
 
   return (
-    <main className="min-h-screen bg-black flex flex-col">
+    <main className="min-h-screen flex flex-col">
       <Navbar />
       <div className="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-20">
         <div className="max-w-2xl w-full text-center">

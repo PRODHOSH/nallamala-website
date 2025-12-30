@@ -1,23 +1,78 @@
 "use client"
 
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { X, Zap, Trophy, MessageCircle } from "lucide-react"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 import { Button } from "@/components/ui/button"
 
 export default function CommunitiesPage() {
+  const router = useRouter()
   const [selectedCommunity, setSelectedCommunity] = useState(null)
 
   const communities = [
     {
       id: 1,
+      name: "Chapters & Verses",
+      slug: "chapters-verses",
+      category: "Literary",
+      icon: MessageCircle,
+      description: "Celebrating literature, writing, and creative expression.",
+      color: "from-pink-600 to-pink-400",
+      image: "/images/communities/chapters_verses.png",
+      fullDescription:
+        "Chapters & Verses is our literary hub where writers, readers, and storytellers unite. We celebrate the power of words through readings, discussions, and creative writing events.",
+      members: 95,
+      foundedYear: 2016,
+      achievements: [
+        "Hosted 8 literary events with 300+ participants",
+        "Published community anthology with 50+ stories",
+        "Monthly open mics with diverse talent",
+        "Writer mentorship program",
+      ],
+      events: [
+        { title: "Poetry Night", date: "Jan 2025" },
+        { title: "Short Story Workshop", date: "Feb 2025" },
+        { title: "Book Club Discussion", date: "Mar 2025" },
+      ],
+      leads: ["Maya Singh", "Arjun Kumar", "Sneha Desai"],
+    },
+    {
+      id: 2,
+      name: "AIDW",
+      slug: "aidw",
+      category: "AI-ML",
+      icon: Zap,
+      description: "Exploring artificial intelligence and machine learning frontiers.",
+      color: "from-green-600 to-green-400",
+      image: "/images/communities/ai_dw.png",
+      fullDescription:
+        "AIDW (AI Development Workgroup) is at the forefront of AI and ML innovation. We explore cutting-edge technologies and develop real-world applications.",
+      members: 120,
+      foundedYear: 2019,
+      achievements: [
+        "3-part AI workshop series with 200+ attendees",
+        "Published 5 research papers",
+        "Developed 3 ML-based projects",
+        "Partnered with industry leaders",
+      ],
+      events: [
+        { title: "Deep Learning Fundamentals", date: "Jan 2025" },
+        { title: "LLM Applications Workshop", date: "Feb 2025" },
+        { title: "AI Ethics Symposium", date: "Mar 2025" },
+      ],
+      leads: ["Rohan Chakraborty", "Aisha Patel", "Vikram Singh"],
+    },
+    {
+      id: 3,
       name: "Shunya",
+      slug: "shunya",
       category: "Coding",
       icon: Zap,
       description: "Empowering developers through collaborative coding and innovation.",
       color: "from-blue-600 to-blue-400",
-      image: "/placeholder.svg?key=fvnud",
+      image: "/images/communities/shunya.png",
       fullDescription:
         "Shunya is our premier coding club dedicated to fostering programming excellence and innovation. We organize coding contests, workshops, and collaborative projects that challenge our members to push their technical boundaries.",
       members: 150,
@@ -36,7 +91,7 @@ export default function CommunitiesPage() {
       leads: ["Isha Bhat", "Rohan Sharma", "Priya Kumar"],
     },
     {
-      id: 2,
+      id: 4,
       name: "Grand Master Guild",
       category: "Chess",
       icon: Trophy,
@@ -59,56 +114,6 @@ export default function CommunitiesPage() {
         { title: "Simultaneous Exhibition", date: "Mar 2025" },
       ],
       leads: ["Harsh Verma", "Deepak Iyer", "Meera Singh"],
-    },
-    {
-      id: 3,
-      name: "AIDW",
-      category: "AI-ML",
-      icon: Zap,
-      description: "Exploring artificial intelligence and machine learning frontiers.",
-      color: "from-green-600 to-green-400",
-      image: "/placeholder.svg?key=wlspf",
-      fullDescription:
-        "AIDW (AI Development Workgroup) is at the forefront of AI and ML innovation. We explore cutting-edge technologies and develop real-world applications.",
-      members: 120,
-      foundedYear: 2019,
-      achievements: [
-        "3-part AI workshop series with 200+ attendees",
-        "Published 5 research papers",
-        "Developed 3 ML-based projects",
-        "Partnered with industry leaders",
-      ],
-      events: [
-        { title: "Deep Learning Fundamentals", date: "Jan 2025" },
-        { title: "LLM Applications Workshop", date: "Feb 2025" },
-        { title: "AI Ethics Symposium", date: "Mar 2025" },
-      ],
-      leads: ["Rohan Chakraborty", "Aisha Patel", "Vikram Singh"],
-    },
-    {
-      id: 4,
-      name: "Chapters & Verses",
-      category: "Literary",
-      icon: MessageCircle,
-      description: "Celebrating literature, writing, and creative expression.",
-      color: "from-pink-600 to-pink-400",
-      image: "/placeholder.svg?key=wnuyp",
-      fullDescription:
-        "Chapters & Verses is our literary hub where writers, readers, and storytellers unite. We celebrate the power of words through readings, discussions, and creative writing events.",
-      members: 95,
-      foundedYear: 2016,
-      achievements: [
-        "Hosted 8 literary events with 300+ participants",
-        "Published community anthology with 50+ stories",
-        "Monthly open mics with diverse talent",
-        "Writer mentorship program",
-      ],
-      events: [
-        { title: "Poetry Night", date: "Jan 2025" },
-        { title: "Short Story Workshop", date: "Feb 2025" },
-        { title: "Book Club Discussion", date: "Mar 2025" },
-      ],
-      leads: ["Maya Singh", "Arjun Kumar", "Sneha Desai"],
     },
     {
       id: 5,
@@ -187,10 +192,18 @@ export default function CommunitiesPage() {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
             {communities.map((community) => {
               const IconComponent = community.icon
+              const handleClick = () => {
+                if (community.slug) {
+                  router.push(`/communities/${community.slug}`)
+                } else {
+                  setSelectedCommunity(community)
+                }
+              }
+              
               return (
                 <button
                   key={community.id}
-                  onClick={() => setSelectedCommunity(community)}
+                  onClick={handleClick}
                   className="glass-dark p-6 rounded-xl border border-primary/20 hover:border-primary/60 transition-all duration-300 hover:-translate-y-1 text-left cursor-pointer group"
                 >
                   {/* Image */}
@@ -202,12 +215,22 @@ export default function CommunitiesPage() {
                     />
                   </div>
 
-                  {/* Icon */}
-                  <div
-                    className={`w-12 h-12 rounded-lg bg-gradient-to-br ${community.color} mb-4 opacity-80 group-hover:opacity-100 transition flex items-center justify-center`}
-                  >
-                    <IconComponent size={24} className="text-white" />
-                  </div>
+                  {/* Icon - Use actual image for Chapters & Verses, AIDW, and Shunya */}
+                  {community.slug === "chapters-verses" || community.slug === "aidw" || community.slug === "shunya" ? (
+                    <div className="w-12 h-12 rounded-full mb-4 overflow-hidden border-2 border-primary/50">
+                      <img
+                        src={community.image}
+                        alt={`${community.name} logo`}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  ) : (
+                    <div
+                      className={`w-12 h-12 rounded-lg bg-gradient-to-br ${community.color} mb-4 opacity-80 group-hover:opacity-100 transition flex items-center justify-center`}
+                    >
+                      <IconComponent size={24} className="text-white" />
+                    </div>
+                  )}
 
                   <p className="text-primary text-sm uppercase tracking-widest mb-2">{community.category}</p>
                   <h3 className="text-xl font-serif font-bold text-white mb-3">{community.name}</h3>

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 import { Badge } from "@/components/ui/badge"
@@ -27,6 +27,11 @@ export default function Events() {
   const [search, setSearch] = useState("")
   const [expandedId, setExpandedId] = useState<number | null>(null)
   const [selectedImage, setSelectedImage] = useState<string | null>(null)
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   const toggleExpand = (id: number) => {
     setExpandedId(expandedId === id ? null : id)
@@ -262,7 +267,7 @@ const pastEvents: EventItem[] = [
   )
 
   return (
-    <main className="min-h-screen bg-black">
+    <main className="min-h-screen">
       <Navbar />
 
       {/* Background glow */}
@@ -379,17 +384,19 @@ const pastEvents: EventItem[] = [
                     Add to Calendar
                   </a>
 
-                  <button
-                    onClick={() =>
-                      navigator.share?.({
-                        title: event.title,
-                        text: event.description,
-                      })
-                    }
-                    className="px-4 py-2 bg-white/5 hover:bg-primary/20 border border-white/10 hover:border-primary/50 rounded-lg text-white/70 hover:text-white transition"
-                  >
-                    <Share2 size={16} />
-                  </button>
+                  {mounted && navigator.share && (
+                    <button
+                      onClick={() =>
+                        navigator.share({
+                          title: event.title,
+                          text: event.description,
+                        })
+                      }
+                      className="px-4 py-2 bg-white/5 hover:bg-primary/20 border border-white/10 hover:border-primary/50 rounded-lg text-white/70 hover:text-white transition"
+                    >
+                      <Share2 size={16} />
+                    </button>
+                  )}
                 </div>
               </div>
             </div>

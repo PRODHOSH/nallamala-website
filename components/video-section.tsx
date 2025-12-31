@@ -45,7 +45,7 @@ export default function VideoSection() {
   const regions = useCountAnimation(7)
 
   return (
-    <section id="video-section" className="relative py-20 px-4 sm:px-6 lg:px-8 bg-black overflow-hidden">
+    <section id="video-section" className="relative py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
       {/* Background animation */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl opacity-20 animate-pulse"></div>

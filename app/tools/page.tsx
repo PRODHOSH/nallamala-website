@@ -41,7 +41,7 @@ export default function Tools() {
   ]
 
   return (
-    <main className="min-h-screen bg-black">
+    <main className="min-h-screen">
       <Navbar />
       
       {/* Background animations */}

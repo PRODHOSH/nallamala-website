@@ -181,7 +181,7 @@ export default function GPAPredictor() {
       { grade: "B", gradePoints: 8, minScore: 70 },
       { grade: "C", gradePoints: 7, minScore: 60 },
       { grade: "D", gradePoints: 6, minScore: 50 },
-      { grade: "E", gradePoints: 5, minScore: 40 },
+      { grade: "E", gradePoints: 4, minScore: 40 },
     ]
 
     const results: GradePrediction[] = gradeThresholds.map(({ grade, gradePoints, minScore }) => {

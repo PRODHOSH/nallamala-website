@@ -24,7 +24,7 @@ const gradePointsOptions = [
   { label: "B (8)", value: 8 },
   { label: "C (7)", value: 7 },
   { label: "D (6)", value: 6 },
-  { label: "E (5)", value: 5 },
+  { label: "E (4)", value: 4 },
   { label: "U (0)", value: 0 },
 ]
 
@@ -134,7 +134,7 @@ export default function GPACalculator() {
 
       // Convert grade to grade points and add to semester courses
       const gradeToPoints: Record<string, number> = {
-        'S': 10, 'A': 9, 'B': 8, 'C': 7, 'D': 6, 'E': 5, 'U': 0, 'F': 0
+        'S': 10, 'A': 9, 'B': 8, 'C': 7, 'D': 6, 'E': 4, 'U': 0, 'F': 0
       }
       const gradePoints = gradeToPoints[grade] || 0
 

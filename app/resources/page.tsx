@@ -33,13 +33,15 @@ export default function Resources() {
   return (
     <main className="min-h-screen bg-black flex flex-col">
       <Navbar />
-      <div className="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-20">
+      
+      {/* Background animations */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl opacity-30 animate-pulse"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl opacity-30 animate-pulse delay-1000"></div>
+      </div>
+
+      <div className="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-20 pb-20">
         <div className="max-w-2xl w-full text-center">
-          {/* Background animations */}
-          <div className="absolute inset-0 overflow-hidden -z-10">
-            <div className="absolute top-20 right-10 w-96 h-96 bg-primary/5 rounded-full blur-3xl opacity-20"></div>
-            <div className="absolute bottom-20 left-10 w-96 h-96 bg-primary/5 rounded-full blur-3xl opacity-20"></div>
-          </div>
 
           <div className="glass-dark p-12 rounded-2xl border border-primary/30">
             {!isAuthenticated ? (

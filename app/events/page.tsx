@@ -5,7 +5,7 @@ import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 import { Badge } from "@/components/ui/badge"
 import Image from "next/image"
-import { Calendar, Share2 } from "lucide-react"
+import { Calendar, Share2, X } from "lucide-react"
 
 type EventTab = "current" | "upcoming" | "past"
 
@@ -26,8 +26,12 @@ export default function Events() {
   const [activeTab, setActiveTab] = useState<EventTab>("current")
   const [search, setSearch] = useState("")
   const [expandedId, setExpandedId] = useState<number | null>(null)
+<<<<<<< HEAD
   const [selectedEvent, setSelectedEvent] = useState<EventItem | null>(null)
 
+=======
+  const [selectedImage, setSelectedImage] = useState<string | null>(null)
+>>>>>>> c10dd02420d49cf15548b41981b6ad4ed6f09fce
 
   const toggleExpand = (id: number) => {
     setExpandedId(expandedId === id ? null : id)
@@ -395,7 +399,7 @@ Through structured debates and collaborative sessions, participants critically u
   )
 
   return (
-    <main className="min-h-screen bg-black">
+    <main className="min-h-screen">
       <Navbar />
 
       {/* Background glow */}
@@ -407,9 +411,13 @@ Through structured debates and collaborative sessions, participants critically u
       <div className="max-w-[1400px] mx-auto px-2 pt-24 pb-20">
         {/* Header */}
         <div className="text-center mb-14">
-          <h1 className="text-5xl font-bold text-white mb-4">
+          <p className="text-primary text-sm uppercase tracking-widest mb-4">Our Events</p>
+          <h1 className="text-5xl font-serif font-bold text-white mb-4">
             House <span className="text-primary">Events</span>
           </h1>
+          <p className="text-white/70 text-lg mb-8 max-w-2xl mx-auto">
+            Discover events and activities that bring our community together
+          </p>
 
           <input
             type="text"
@@ -445,15 +453,24 @@ Through structured debates and collaborative sessions, participants critically u
               onClick={() => setSelectedEvent(event)}
               className="group cursor-pointer rounded-xl overflow-hidden bg-white/5 border border-white/10
               hover:border-primary/50 hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/20
+<<<<<<< HEAD
               transition-all duration-300"
               >
 
               <div className="relative h-[420px] bg-black overflow-hidden">
+=======
+              transition-all duration-300 flex flex-col"
+            >
+              <div 
+                className="relative h-93 bg-gradient-to-br from-primary/5 to-black overflow-hidden flex-shrink-0 cursor-pointer"
+                onClick={() => setSelectedImage(event.image)}
+              >
+>>>>>>> c10dd02420d49cf15548b41981b6ad4ed6f09fce
                 <Image
                   src={event.image}
                   alt={event.title}
                   fill
-                  className="object-contain group-hover:scale-105 transition-transform duration-500"
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 {event.status && (
                   <div className="absolute top-4 right-4">
@@ -464,13 +481,13 @@ Through structured debates and collaborative sessions, participants critically u
                 )}
               </div>
 
-              <div className="p-4">
-                <h3 className="text-lg font-bold text-white mb-1">
+              <div className="p-5 flex flex-col flex-1">
+                <h3 className="text-xl font-bold text-white mb-2">
                   {event.title}
                 </h3>
 
                 <p
-                  className={`text-white/70 text-sm transition-all ${
+                  className={`text-white/70 text-sm leading-relaxed mb-3 flex-1 transition-all ${
                     expandedId === event.id ? "" : "line-clamp-3"
                   }`}
                 >
@@ -480,17 +497,20 @@ Through structured debates and collaborative sessions, participants critically u
                 {event.description.length > 160 && (
                   <button
                     onClick={() => toggleExpand(event.id)}
-                    className="mt-2 text-xs font-semibold text-primary hover:underline"
+                    className="text-xs font-semibold text-primary hover:underline self-start mb-3"
                   >
                     {expandedId === event.id ? "Show less" : "Read more"}
                   </button>
                 )}
 
-                <div className="text-white/60 text-sm mt-3 mb-3">
-                  {event.date} • {event.location}
+                <div className="flex items-center gap-2 text-white/60 text-sm mb-4 pt-3 border-t border-white/10">
+                  <Calendar size={16} className="text-primary" />
+                  <span>{event.date}</span>
+                  <span>•</span>
+                  <span>{event.location}</span>
                 </div>
 
-                <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
                   <a
                     onClick={(e) => e.stopPropagation()}
                     href={`https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(
@@ -499,9 +519,10 @@ Through structured debates and collaborative sessions, participants critically u
                       event.description
                     )}&location=${encodeURIComponent(event.location)}`}
                     target="_blank"
-                    className="text-white/60 hover:text-primary"
+                    className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-white/5 hover:bg-primary/20 border border-white/10 hover:border-primary/50 rounded-lg text-white/70 hover:text-white transition text-sm"
                   >
-                    <Calendar size={18} />
+                    <Calendar size={16} />
+                    Add to Calendar
                   </a>
 
 
@@ -512,12 +533,20 @@ Through structured debates and collaborative sessions, participants critically u
                         title: event.title,
                         text: event.description,
                       })
+<<<<<<< HEAD
                       }}
                       className="text-white/60 hover:text-primary"
                     >
                       <Share2 size={18} />
                     </button>
 
+=======
+                    }
+                    className="px-4 py-2 bg-white/5 hover:bg-primary/20 border border-white/10 hover:border-primary/50 rounded-lg text-white/70 hover:text-white transition"
+                  >
+                    <Share2 size={16} />
+                  </button>
+>>>>>>> c10dd02420d49cf15548b41981b6ad4ed6f09fce
                 </div>
               </div>
             </div>
@@ -566,6 +595,30 @@ Through structured debates and collaborative sessions, participants critically u
     </div>
   </div>
 )}
+
+      {/* Image Popup Modal */}
+      {selectedImage && (
+        <div 
+          className="fixed inset-0 z-50 bg-black/95 backdrop-blur-md flex items-center justify-center p-4"
+          onClick={() => setSelectedImage(null)}
+        >
+          <div className="relative max-w-6xl max-h-[90vh] w-full h-full">
+            <button
+              onClick={() => setSelectedImage(null)}
+              className="absolute top-4 right-4 z-10 text-white hover:text-primary transition p-2 bg-black/50 rounded-full"
+            >
+              <X size={32} />
+            </button>
+            <Image
+              src={selectedImage}
+              alt="Event image"
+              fill
+              className="object-contain"
+              onClick={(e) => e.stopPropagation()}
+            />
+          </div>
+        </div>
+      )}
 
       <Footer />
     </main>

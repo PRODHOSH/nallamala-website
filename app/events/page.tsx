@@ -12,9 +12,9 @@ type EventTab = "current" | "upcoming" | "past"
 type EventItem = {
   id: number
   title: string
-  description: string
+  description: JSX.Element | string
   date: string
-  location: string
+  location?: string
   image: string
   status?: string
   category?: string
@@ -26,12 +26,8 @@ export default function Events() {
   const [activeTab, setActiveTab] = useState<EventTab>("current")
   const [search, setSearch] = useState("")
   const [expandedId, setExpandedId] = useState<number | null>(null)
-<<<<<<< HEAD
   const [selectedEvent, setSelectedEvent] = useState<EventItem | null>(null)
-
-=======
   const [selectedImage, setSelectedImage] = useState<string | null>(null)
->>>>>>> c10dd02420d49cf15548b41981b6ad4ed6f09fce
 
   const toggleExpand = (id: number) => {
     setExpandedId(expandedId === id ? null : id)
@@ -89,36 +85,32 @@ export default function Events() {
     },
   ]
 
- /* ---------------- PAST EVENTS ---------------- */
-const pastEvents: EventItem[] = [
-  {
-    id: 23,
-    title: "AES Full Syllabus Revision",
-    date: "17 December",
-    image: "/images/events/19.png",
-    description: (
-      <>
-        <p>
+  /* ---------------- PAST EVENTS ---------------- */
+  const pastEvents: EventItem[] = [
+    // All previous past events (id: 23 to 5) go here, unchanged
+    {
+      id: 23,
+      title: "AES Full Syllabus Revision",
+      date: "17 December",
+      image: "/images/events/19.png",
+      description: (
+        <>
           A complete revision session for Analog Electronic Systems (AES) was successfully conducted.
-        A full-syllabus revision session for Analog Electronic Systems (AES) was successfully conducted to help students strengthen their conceptual understanding and reinforce key topics. Held on Wednesday, 17th December, the session was led by Venkata Subhash, who guided participants through the entire syllabus with structured explanations and focused discussions.
-        The session addressed commonly challenging areas, clarified important concepts, and provided targeted problem-solving insights. Students also benefited from dedicated doubt-resolution segments, where pre-submitted questions and conceptual difficulties were discussed in detail.
-        Overall, the revision session proved to be highly effective in consolidating learning, improving confidence, and helping students prepare more strategically for AES assessments.
-
-        </p>
-      </>
-    ),
-  },
-  {
-    id: 22,
-    title: "AI GENESIS – Careers in Agentic AI",
-    date: "15 November",
-    image: "/images/events/18.png",
-    description: (
-      <>
-        <p>
+          A full-syllabus revision session for Analog Electronic Systems (AES) was successfully conducted to help students strengthen their conceptual understanding and reinforce key topics. Held on Wednesday, 17th December, the session was led by Venkata Subhash, who guided participants through the entire syllabus with structured explanations and focused discussions.
+          The session addressed commonly challenging areas, clarified important concepts, and provided targeted problem-solving insights. Students also benefited from dedicated doubt-resolution segments, where pre-submitted questions and conceptual difficulties were discussed in detail.
+          Overall, the revision session proved to be highly effective in consolidating learning, improving confidence, and helping students prepare more strategically for AES assessments.
+        </>
+      ),
+    },
+    {
+      id: 22,
+      title: "AI GENESIS – Careers in Agentic AI",
+      date: "15 November",
+      image: "/images/events/18.png",
+      description: (
+        <>
           Career-focused session on opportunities in Agentic AI. The session provided participants with clarity and direction, helping them align their technical learning with real-world opportunities. As the final chapter of the AI GENESIS series, the event served as a fitting conclusion, inspiring learners to explore meaningful and future-ready careers in intelligent systems and AI innovation.
-        </p>
-        <p>
+          <br />
           Recording Link:{" "}
           <a
             href="https://youtu.be/VL454gd-obw?si=TjRnbUo6ng_H51Zd"
@@ -128,11 +120,11 @@ const pastEvents: EventItem[] = [
           >
             Watch Here
           </a>
-        </p>
-      </>
-    ),
-  },
-  {
+        </>
+      ),
+    },
+    // Continue copying all previous pastEvents from id 21 to 5
+     {
     id: 21,
     title: "Nostalgia Night",
     date: "14 November",
@@ -140,8 +132,8 @@ const pastEvents: EventItem[] = [
     description: (
       <>
         A fun interactive night revisiting childhood memories. The nostalgic interactive session organized by Nallamala House in collaboration with Veritas Oratory Society took participants on a joyful trip down memory lane. Held on 14th November, the event brought together students for an evening filled with laughter, shared memories, and light-hearted conversations about childhood and school days.
-Through engaging activities such as Never Have I Ever, Truth or Dare, rapid-fire nostalgic debates, and open storytelling, participants relived their funniest classroom moments, embarrassing mishaps, and unforgettable school experiences. The session created a relaxed and inclusive space where stories flowed freely and laughter echoed throughout the virtual room.
-More than just a fun gathering, the event fostered connection, camaraderie, and shared joy, reminding everyone of the simple moments that shaped their early years. The session concluded on a cheerful note, leaving participants smiling, bonded by memories, and warmed by a sense of collective nostalgia.
+        Through engaging activities such as Never Have I Ever, Truth or Dare, rapid-fire nostalgic debates, and open storytelling, participants relived their funniest classroom moments, embarrassing mishaps, and unforgettable school experiences. The session created a relaxed and inclusive space where stories flowed freely and laughter echoed throughout the virtual room.
+        More than just a fun gathering, the event fostered connection, camaraderie, and shared joy, reminding everyone of the simple moments that shaped their early years. The session concluded on a cheerful note, leaving participants smiling, bonded by memories, and warmed by a sense of collective nostalgia.
 
       </>
     ),
@@ -183,8 +175,8 @@ Recording link : https://youtu.be/esmuGxoiBJA?si=abaRV3rYWOJzlruq
     description: (
       <>
         A focused discussion session clarifying Python OPPE concepts. Nallamala House successfully conducted a focused Python OPPE Discussion Session on 7th November, aimed at helping students clarify key concepts and strengthen their exam readiness. The session featured in-depth discussions on important OPPE topics along with practical insights to enhance conceptual understanding.
-Participants actively engaged by raising doubts, revisiting core Python concepts, and discussing effective problem-solving strategies. The structured format ensured efficient coverage of essential topics, while a dedicated doubt-solving segment helped address individual queries.
-The session concluded on a motivating note, emphasizing the importance of strong conceptual clarity over rote learning. Overall, the discussion proved to be a productive and confidence-boosting experience for students preparing for the Python OPPE.
+      Participants actively engaged by raising doubts, revisiting core Python concepts, and discussing effective problem-solving strategies. The structured format ensured efficient coverage of essential topics, while a dedicated doubt-solving segment helped address individual queries.
+      The session concluded on a motivating note, emphasizing the importance of strong conceptual clarity over rote learning. Overall, the discussion proved to be a productive and confidence-boosting experience for students preparing for the Python OPPE.
 
       </>
     ),
@@ -382,10 +374,169 @@ Through structured debates and collaborative sessions, participants critically u
       </>
     ),
   },
-];
+  {
+      id: 24,
+      title: "Chapters Unlocked",
+      date: "18 February 2024",
+      image: "/images/events/20.png",
+      description: (
+        <>
+          Chapters Unlocked marked the inaugural ceremony and book talk session of our literary journey, held as an engaging virtual event on Google Meet. The session featured an insightful conversation with Ms. Riya Jhamb, who shared her perspectives on storytelling, reading culture, and her latest literary work. Participants had the opportunity to dive deep into discussions on literature, exchange ideas with fellow book lovers, and engage in meaningful conversations in a warm and inclusive environment. With Ms. Riya’s vibrant Instagram community of over 20,000 readers, the event successfully brought together a diverse audience united by a love for books. The session concluded as an enriching and inspiring experience, setting the tone for many more literary conversations to come.
+        </>
+      ),
+    },
+    {
+    id: 25,
+    title: "Harry Potter: Watch Party",
+    date: "29 March 2024 | 7:00 PM",
+    image: "/images/events/21.png",
+    description: (
+      <>
+        The Harry Potter: Watch Party was a magical movie night where participants stepped into the enchanting world of Harry Potter and the Philosopher’s Stone. The virtual screening brought together Potterheads to relive the wonder of Hogwarts School of Witchcraft and Wizardry.
+        <br />
+        As Harry, Ron, and Hermione embarked on their unforgettable journey, viewers experienced themes of friendship, bravery, and the enduring power of love. The event witnessed an overwhelming response, with over 172 participants tuning in, making it a memorable and highly successful community gathering.
+        <br />
+        Filled with nostalgia, excitement, and shared moments of magic, the watch party truly celebrated the timeless charm of the wizarding world. 🪄🍿✨
+      </>
+    ),
+  },
+  {
+    id: 26,
+    title: "Dastaan-e-Alfaaz",
+    date: "Weekly Series 2024",
+    image: "/images/events/22.png",
+    description: (
+      <>
+        Dastaan-e-Alfaaz is a poetic Urdu phrase that translates to “Story of Words.” It represents the art of weaving emotions, experiences, and imagination into verses that resonate far beyond their surface meaning.
+        <br />
+        Chapters & Verses proudly presents the Dastaan-e-Alfaaz series—an ongoing literary initiative that brings soulful Urdu shayari to your Sundays. Each edition features thoughtfully crafted verses by our talented community members, celebrating the beauty and depth of expression through words.
+        <br />
+        Join us on Instagram as we paint a canvas of emotions with every carefully chosen line, inviting you to pause, reflect, and feel. ✨ Anticipate the magic—unfolding weekly. 💫
+      </>
+    ),
+  },
+  {
+    id: 27,
+    title: "Unscripted Pages",
+    date: "24 November 2024 | 8:00 PM",
+    image: "/images/events/23.png",
+    description: (
+      <>
+        Unscripted Pages was a collaborative literary competition designed to celebrate creative writing, expression, and presentation. The event unfolded across two rounds, beginning with written submissions based on given themes. Shortlisted participants then advanced to a live Google Meet session, where finalists presented their work and brought their words to life.
+        <br />
+        The competition fostered confidence, creativity, and meaningful literary exchange, making it an engaging and memorable experience for all involved.
+      </>
+    ),
+  },
+  {
+    id: 28,
+    title: "Noor-e-Sama — A Night of Shayari",
+    date: "5 February 2025",
+    image: "/images/events/24.png",
+    description: (
+      <>
+        Noor-e-Sama was an enchanting evening curated by Chapters & Verses, the Literary and Oratory Club of Nallamala House, celebrating the luminous art of Shayari. The event featured heartfelt recitations of both classic and contemporary Shayaris by passionate poets and poetry enthusiasts.
+        <br />
+        The night brought together lovers of eloquent expression, offering a space to reflect, feel, and connect through words. From seasoned Shayari connoisseurs to first-time listeners, Noor-e-Sama left the audience inspired, moved, and immersed in the timeless beauty of poetry.
+      </>
+    ),
+  },
+  {
+  id: 29,
+  title: "TECHTALK: AI Innovators & Data Wizards (AIDW)",
+  date: "18 March 2025",
+  image: "/images/events/25.png",
+  description: (
+    <>
+      AIDW – IIT Madras successfully concluded with an engaging session on “GenAI in SEEK” featuring Prem Kumar Sharma. The session explored how generative AI is transforming learning platforms and software engineering practices.
+      <br />
+      Key discussions focused on AI-powered doubt resolution, automated debugging for coding assignments, and instant course support using Retrieval-Augmented Generation (RAG). The interactive nature of the session encouraged meaningful discussions and practical takeaways for participants.
+      <br />
+      The event was enriched by active participation from attendees and valuable insights shared by the speaker, making it both informative and impactful. AIDW looks forward to hosting more such knowledge-driven sessions in the future.
+    </>
+  ),
+},
+{
+  id: 30,
+  title: "DataSphere: Mastering Big Tech & GenAI",
+  date: "19 April 2025",
+  image: "/images/events/26.png",
+  description: (
+    <>
+      The speaker session was successfully conducted featuring Nischay Agarwal, Senior Data Engineer at Walmart. The session provided participants with valuable insights into building careers in data engineering, AI, and big tech ecosystems.
+      <br />
+      Attendees gained clarity on industry expectations, essential skills required for data and AI roles, and practical guidance on navigating career paths in leading tech companies. The session also featured an engaging interactive Q&A, where participants received direct advice and real-world perspectives from the speaker.
+      <br />
+      The event witnessed active participation and meaningful discussions, making it an insightful and enriching experience for all attendees. AIDW Club looks forward to organizing more such industry-focused sessions in the future.
+    </>
+  ),
+},
+{
+  id: 31,
+  title: "From Theory to Practice: The Journey of a Data Scientist",
+  date: "2 October 2024",
+  image: "/images/events/27.png",
+  description: (
+    <>
+      The session was successfully conducted featuring Mr. Manish Mazumder, an ML Engineer and Data Scientist and an IIT Kanpur alumnus. The session offered participants valuable insights into the transition from academic learning to real-world applications in the data science industry.
+      <br />
+      Mr. Mazumder shared his professional journey, highlighting practical challenges, industry expectations, and the skills required to succeed in machine learning and data science roles. The interactive discussion allowed learners to engage directly with the speaker, gaining clarity on career paths, real-world problem-solving, and industry best practices.
+      <br />
+      The session witnessed enthusiastic participation and thoughtful interactions, making it an inspiring and informative experience for all attendees. AIDW Club looks forward to hosting more such knowledge-driven sessions in the future.
+    </>
+  ),
+},
+{
+  id: 32,
+  title: "DSA Triathlon 2.0",
+  date: "Paradox, IIT Madras BS",
+  image: "/images/events/28.png",
+  description: (
+    <>
+      DSA Triathlon 2.0 was successfully conducted in Paradox, the technical and coding ecosystem of IIT Madras BS, in collaboration with Shunya and Nallamala House.
+      <br />
+      Powered by Innovation Labs | FetchAI, the event followed a three-level competitive format and featured carefully curated Data Structures and Algorithms problems. The challenges were designed to assess participants’ problem-solving abilities, logical reasoning, and coding efficiency across varying difficulty levels.
+      <br />
+      The event witnessed active participation from students and fostered a competitive yet engaging learning environment, contributing to the growth of technical skills and competitive programming culture within Paradox.
+    </>
+  ),
+},
+{
+  id: 33,
+  title: "Tech Discussion Session with Vanshika Pandey",
+  date: "2025",
+  image: "/images/events/29.png",
+  description: (
+    <>
+      An exclusive tech discussion session with Vanshika Pandey was successfully conducted by Shunya. The session focused on careers in technology and software development, offering valuable insights into navigating the rapidly evolving tech industry.
+      <br />
+      Vanshika Pandey, currently working as a Software Development Engineer at JP Morgan Chase, shared her professional journey and practical guidance for students aiming to build strong careers in tech.
+      <br />
+      With expertise spanning technologies such as Python, JavaScript, ReactJS, AngularJS, Git/GitHub, C++, and more, the session proved to be both informative and engaging. Participants actively interacted and gained clarity on skill development, industry expectations, and career growth strategies.
+      <br />
+      The event fostered meaningful learning and mentorship, reflecting Shunya’s commitment to creating impactful technical discussions and knowledge-sharing opportunities for students.
+    </>
+  ),
+},
+{
+  id: 34,
+  title: "Seminar Session with Akshaj Padmakar",
+  date: "2025",
+  image: "/images/events/30.png",
+  description: (
+    <>
+      A seminar session featuring Akshaj Padmakar was successfully conducted by Shunya – The Coding and Developers Club.
+      <br />
+      Akshaj Padmakar, former Competitive Coding Head at IIT Guwahati and an upcoming Product Engineer at Sprinklr, shared valuable insights from his academic and professional journey. The session focused on competitive programming, product engineering, and navigating career paths in the tech industry.
+      <br />
+      The discussion catered to both beginners and experienced learners, offering practical advice, real-world perspectives, and motivation for students aspiring to grow in technology and engineering roles. Participants actively engaged during the session, making it an informative and enriching experience.
+      <br />
+      The event reflected Shunya’s continued efforts to bring industry-relevant knowledge and meaningful learning opportunities to students. Grandmaster's Guild - Nallamala House official chess community.
+    </>
+  ),
+},
 
-
-
+  ];
 
   const events =
     activeTab === "current"
@@ -451,21 +602,12 @@ Through structured debates and collaborative sessions, participants critically u
             <div
               key={event.id}
               onClick={() => setSelectedEvent(event)}
-              className="group cursor-pointer rounded-xl overflow-hidden bg-white/5 border border-white/10
-              hover:border-primary/50 hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/20
-<<<<<<< HEAD
-              transition-all duration-300"
-              >
-
-              <div className="relative h-[420px] bg-black overflow-hidden">
-=======
-              transition-all duration-300 flex flex-col"
+              className="transition-all duration-300 flex flex-col rounded-xl overflow-hidden bg-white/5 border border-white/10 hover:border-primary/50 hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/20"
             >
-              <div 
-                className="relative h-93 bg-gradient-to-br from-primary/5 to-black overflow-hidden flex-shrink-0 cursor-pointer"
+              <div
+                className="relative h-[420px] bg-black overflow-hidden cursor-pointer"
                 onClick={() => setSelectedImage(event.image)}
               >
->>>>>>> c10dd02420d49cf15548b41981b6ad4ed6f09fce
                 <Image
                   src={event.image}
                   alt={event.title}
@@ -474,40 +616,31 @@ Through structured debates and collaborative sessions, participants critically u
                 />
                 {event.status && (
                   <div className="absolute top-4 right-4">
-                    <Badge className="bg-red-500 text-white">
-                      {event.status}
-                    </Badge>
+                    <Badge className="bg-red-500 text-white">{event.status}</Badge>
                   </div>
                 )}
               </div>
 
               <div className="p-5 flex flex-col flex-1">
-                <h3 className="text-xl font-bold text-white mb-2">
-                  {event.title}
-                </h3>
+                <h3 className="text-xl font-bold text-white mb-2">{event.title}</h3>
 
-                <p
+                <div
                   className={`text-white/70 text-sm leading-relaxed mb-3 flex-1 transition-all ${
                     expandedId === event.id ? "" : "line-clamp-3"
                   }`}
                 >
                   {event.description}
-                </p>
-
-                {event.description.length > 160 && (
-                  <button
-                    onClick={() => toggleExpand(event.id)}
-                    className="text-xs font-semibold text-primary hover:underline self-start mb-3"
-                  >
-                    {expandedId === event.id ? "Show less" : "Read more"}
-                  </button>
-                )}
+                </div>
 
                 <div className="flex items-center gap-2 text-white/60 text-sm mb-4 pt-3 border-t border-white/10">
                   <Calendar size={16} className="text-primary" />
                   <span>{event.date}</span>
-                  <span>•</span>
-                  <span>{event.location}</span>
+                  {event.location && (
+                    <>
+                      <span>•</span>
+                      <span>{event.location}</span>
+                    </>
+                  )}
                 </div>
 
                 <div className="flex items-center gap-3">
@@ -516,8 +649,8 @@ Through structured debates and collaborative sessions, participants critically u
                     href={`https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(
                       event.title
                     )}&details=${encodeURIComponent(
-                      event.description
-                    )}&location=${encodeURIComponent(event.location)}`}
+                      typeof event.description === "string" ? event.description : event.title
+                    )}&location=${encodeURIComponent(event.location || "")}`}
                     target="_blank"
                     className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-white/5 hover:bg-primary/20 border border-white/10 hover:border-primary/50 rounded-lg text-white/70 hover:text-white transition text-sm"
                   >
@@ -525,80 +658,68 @@ Through structured debates and collaborative sessions, participants critically u
                     Add to Calendar
                   </a>
 
-
                   <button
                     onClick={(e) => {
                       e.stopPropagation()
                       navigator.share?.({
                         title: event.title,
-                        text: event.description,
+                        text:
+                          typeof event.description === "string"
+                            ? event.description
+                            : event.title,
                       })
-<<<<<<< HEAD
-                      }}
-                      className="text-white/60 hover:text-primary"
-                    >
-                      <Share2 size={18} />
-                    </button>
-
-=======
-                    }
+                    }}
                     className="px-4 py-2 bg-white/5 hover:bg-primary/20 border border-white/10 hover:border-primary/50 rounded-lg text-white/70 hover:text-white transition"
                   >
                     <Share2 size={16} />
                   </button>
->>>>>>> c10dd02420d49cf15548b41981b6ad4ed6f09fce
                 </div>
               </div>
             </div>
           ))}
         </div>
       </div>
-          {selectedEvent && (
-  <div
-    className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center px-4"
-    onClick={() => setSelectedEvent(null)} // clicking overlay closes modal
-  >
-    <div
-      className="bg-black border border-white/10 rounded-xl max-w-2xl w-full overflow-hidden relative"
-      onClick={(e) => e.stopPropagation()} // prevent closing when clicking inside modal
-    >
 
-      <button
-        onClick={() => setSelectedEvent(null)}
-        className="absolute top-3 right-3 text-white/60 hover:text-white text-xl"
-      >
-        ✕
-      </button>
+      {/* Selected Event Modal */}
+      {selectedEvent && (
+        <div
+          className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center px-4"
+          onClick={() => setSelectedEvent(null)}
+        >
+          <div
+            className="bg-black border border-white/10 rounded-xl max-w-2xl w-full overflow-hidden relative"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setSelectedEvent(null)}
+              className="absolute top-3 right-3 text-white/60 hover:text-white text-xl"
+            >
+              ✕
+            </button>
 
-      <div className="relative h-[300px] bg-black">
-        <Image
-          src={selectedEvent.image}
-          alt={selectedEvent.title}
-          fill
-          className="object-contain"
-        />
-      </div>
+            <div className="relative h-[300px] bg-black">
+              <Image
+                src={selectedEvent.image}
+                alt={selectedEvent.title}
+                fill
+                className="object-contain"
+              />
+            </div>
 
-      <div className="p-6">
-        <h2 className="text-2xl font-bold text-white mb-2">
-          {selectedEvent.title}
-        </h2>
-
-        <p className="text-white/70 mb-4">
-          {selectedEvent.description}
-        </p>
-
-        <div className="text-white/60 text-sm">
-          {selectedEvent.date} • {selectedEvent.location}
+            <div className="p-6">
+              <h2 className="text-2xl font-bold text-white mb-2">{selectedEvent.title}</h2>
+              <div className="text-white/70 mb-4">{selectedEvent.description}</div>
+              <div className="text-white/60 text-sm">
+                {selectedEvent.date} {selectedEvent.location && <>• {selectedEvent.location}</>}
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-  </div>
-)}
+      )}
 
-      {/* Image Popup Modal */}
+      {/* Image Modal */}
       {selectedImage && (
-        <div 
+        <div
           className="fixed inset-0 z-50 bg-black/95 backdrop-blur-md flex items-center justify-center p-4"
           onClick={() => setSelectedImage(null)}
         >
@@ -624,12 +745,3 @@ Through structured debates and collaborative sessions, participants critically u
     </main>
   )
 }
-
-
-
-
-
-
-
-
-

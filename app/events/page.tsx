@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 import { Badge } from "@/components/ui/badge"
@@ -28,6 +28,11 @@ export default function Events() {
   const [expandedId, setExpandedId] = useState<number | null>(null)
   const [selectedEvent, setSelectedEvent] = useState<EventItem | null>(null)
   const [selectedImage, setSelectedImage] = useState<string | null>(null)
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   const toggleExpand = (id: number) => {
     setExpandedId(expandedId === id ? null : id)

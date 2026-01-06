@@ -35,7 +35,7 @@ export default function UpdatesSection() {
       category: "Event",
       date: "Registration Closes Soon",
       externalLink: "https://iitmparadox.org/events",
-      imagePosition: "object-[46%]" // Adjust: object-left (0%), object-[30%], object-center (50%), object-[70%], object-right (100%)
+      imagePosition: "object-[46%]"   // Adjust: object-left (0%), object-[30%], object-center (50%), object-[70%], object-right (100%)
     },
   ]
 

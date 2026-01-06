@@ -34,7 +34,8 @@ export default function UpdatesSection() {
       image: "/images/updates/magzi.jpeg",
       category: "Event",
       date: "Registration Closes Soon",
-      externalLink: "https://iitmparadox.org/events"
+      externalLink: "https://iitmparadox.org/events",
+      imagePosition: "object-[46%]" // Adjust: object-left (0%), object-[30%], object-center (50%), object-[70%], object-right (100%)
     },
   ]
 
@@ -78,7 +79,7 @@ export default function UpdatesSection() {
                     update.category === "Course Registration" 
                     ? "object-contain p-2" 
                     : "object-cover"
-                  }`}
+                  } ${update.imagePosition || ""}`}
                 />
                 <div className="absolute top-4 left-4 z-10">
                   <Badge className={`border shadow-lg ${categoryColors[update.category]}`}>
